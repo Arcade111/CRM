@@ -6,7 +6,7 @@
     <result column="optime" property="optime" jdbcType="TIMESTAMP" />
     <result column="opip" property="opip" jdbcType="VARCHAR" />
     <result column="function" property="function" jdbcType="VARCHAR" />
-    <result column="params" property="params" jdbcType="VARCHAR" />
+    <result column="params" property="params" jdbcType="CLOB" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from systemlog
@@ -16,7 +16,7 @@
     insert into systemlog (opuser_id, optime, opip, 
       function, params)
     values (#{opuser.id,jdbcType=BIGINT}, #{optime,jdbcType=TIMESTAMP}, #{opip,jdbcType=VARCHAR}, 
-      #{function,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR})
+      #{function,jdbcType=VARCHAR}, #{params,jdbcType=CLOB})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.ucar.crm.domain.Systemlog" >
     update systemlog
@@ -24,7 +24,7 @@
       optime = #{optime,jdbcType=TIMESTAMP},
       opip = #{opip,jdbcType=VARCHAR},
       function = #{function,jdbcType=VARCHAR},
-      params = #{params,jdbcType=VARCHAR}
+      params = #{params,jdbcType=CLOB}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >

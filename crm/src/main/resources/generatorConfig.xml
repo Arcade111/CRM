@@ -81,7 +81,8 @@
                 value=""/> -->
         </javaClientGenerator>
 
-        <table tableName="systemlog">
+        <!-- 数据库那张表来逆向生成 -->
+        <table tableName="menu">
             <!-- 参考 javaModelGenerator 的 constructorBased属性 -->
             <property name="constructorBased" value="false"/>
             <generatedKey column="id" sqlStatement="JDBC"/>

@@ -1,6 +1,7 @@
 package com.ucar.crm.service;
 
 import com.ucar.crm.domain.Employee;
+import com.ucar.crm.domain.Role;
 import com.ucar.crm.page.PageResult;
 import com.ucar.crm.query.EmployeeQueryObject;
 import com.ucar.crm.query.QueryObject;
@@ -23,4 +24,10 @@ public interface IEmployeeService {
     PageResult queryPageResult(EmployeeQueryObject queryObject);
 
     void remove(Long id);
+
+    void insertRelation(Long eid,Long rid);
+
+    List<Long> getRidByEid(Long eid);
+
+    void deleteRelation(Long eid);
 }

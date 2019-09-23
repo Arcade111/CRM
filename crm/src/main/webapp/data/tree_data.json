@@ -11,5 +11,10 @@
 		"attributes": {
 			"url": "/department"
 		}
+	},{
+		"text": "角色管理",
+		"attributes": {
+			"url": "/role"
+		}
 	}]
 }]

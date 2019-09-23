@@ -43,4 +43,9 @@ public class PermissionServiceImpl implements IPermissionService {
     public List<Permission> getPermissionByRid(Long rid) {
         return permissionMapper.getPermissionByRid(rid);
     }
+
+    @Override
+    public List<String> getPermissionByEid(Long eid) {
+        return permissionMapper.getPermissionByEid(eid);
+    }
 }

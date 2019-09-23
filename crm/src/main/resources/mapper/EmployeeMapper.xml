@@ -92,4 +92,16 @@
     <update id="remove" parameterType="java.lang.Long">
         update employee set state = 0 where id=#{id}
     </update>
+
+    <insert id="insertRelation">
+        insert into employee_role (e_id,r_id) values (#{eid},#{rid})
+    </insert>
+    
+    <select id="getRidByEid" resultType="java.lang.Long">
+        select r_id from employee_role where e_id = #{eid}
+    </select>
+
+    <delete id="deleteRelation">
+        delete from employee_role where e_id=#{eid}
+    </delete>
 </mapper>

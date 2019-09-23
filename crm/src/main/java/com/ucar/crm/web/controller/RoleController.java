@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 public class RoleController {
 
@@ -19,7 +21,7 @@ public class RoleController {
     private IRoleService roleService;
 
     @RequestMapping("/role")
-    public String inde(){
+    public String index(){
         return "role";
     }
 
@@ -42,6 +44,12 @@ public class RoleController {
     @ResponseBody
     public PageResult list(QueryObject queryObject){
         return roleService.queryPageResult(queryObject);
+    }
+
+    @RequestMapping("/role_selectAll")
+    @ResponseBody
+    public List<Role> selectAll(){
+        return roleService.selectAll();
     }
 
     @RequestMapping("/role_update")

@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.ucar.com/crm/functions" prefix="myFn" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -16,9 +19,15 @@
 <body style="width: 100%;height: 100%">
 <div id="emp_datagrid"></div>
 <div id="emp_toolbar">
-    <a class="easyui-linkbutton" iconCls="icon-add" plain="true" data-cmd="add">新增</a>
-    <a class="easyui-linkbutton" iconCls="icon-edit" plain="true" data-cmd="edit">编辑</a>
-    <a id="emp_remove_btn" class="easyui-linkbutton" iconCls="icon-remove" plain="true" data-cmd="remove">离职</a>
+    <c:if test="${myFn:checkPermission('com.ucar.crm.web.controller.EmployeeController:save')}">
+        <a class="easyui-linkbutton" iconCls="icon-add" plain="true" data-cmd="add">新增</a>
+    </c:if>
+    <c:if test="${myFn:checkPermission('com.ucar.crm.web.controller.EmployeeController:edit')}">
+        <a class="easyui-linkbutton" iconCls="icon-edit" plain="true" data-cmd="edit">编辑</a>
+    </c:if>
+    <c:if test="${myFn:checkPermission('com.ucar.crm.web.controller.EmployeeController:updateState')}">
+        <a id="emp_remove_btn" class="easyui-linkbutton" iconCls="icon-remove" plain="true" data-cmd="remove">离职</a>
+    </c:if>
     <a class="easyui-linkbutton" iconCls="icon-reload" plain="true" data-cmd="reload">刷新</a>
     <input type="text" name="keyword"/>
     <a class="easyui-linkbutton" iconCls="icon-search" plain="true" data-cmd="searchByKeyword">查询</a>
@@ -73,6 +82,19 @@
                                     value:false
                                 }
                                 ]
+                    "/>
+                </td>
+            </tr>
+            <tr>
+                <td>角色:</td>
+                <td>
+                    <input id="roles_combobox" type="text" class="easyui-combobox"
+                           data-options="
+                                panelHeight:'auto',
+                                multiple:true,
+                                url:'/role_selectAll',
+                                valueField: 'id',
+                                textField: 'name',
                     "/>
                 </td>
             </tr>

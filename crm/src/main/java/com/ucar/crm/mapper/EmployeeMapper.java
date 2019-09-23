@@ -1,6 +1,7 @@
 package com.ucar.crm.mapper;
 
 import com.ucar.crm.domain.Employee;
+import com.ucar.crm.domain.Role;
 import com.ucar.crm.query.EmployeeQueryObject;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,4 +26,10 @@ public interface EmployeeMapper {
 
     //设置离职
     void remove(Long id);
+
+    void insertRelation(@Param("eid") Long eid,@Param("rid") Long rid);
+
+    List<Long> getRidByEid(Long eid);
+
+    void deleteRelation(Long eid);
 }

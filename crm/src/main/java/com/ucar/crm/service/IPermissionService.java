@@ -16,4 +16,6 @@ public interface IPermissionService {
     int updateByPrimaryKey(Permission record);
 
     List<Permission> getPermissionByRid(Long rid);
+
+    List<String> getPermissionByEid(Long eid);
 }

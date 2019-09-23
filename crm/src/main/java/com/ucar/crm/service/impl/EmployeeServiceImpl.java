@@ -1,6 +1,7 @@
 package com.ucar.crm.service.impl;
 
 import com.ucar.crm.domain.Employee;
+import com.ucar.crm.domain.Role;
 import com.ucar.crm.mapper.EmployeeMapper;
 import com.ucar.crm.page.PageResult;
 import com.ucar.crm.query.EmployeeQueryObject;
@@ -25,7 +26,12 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Override
     public int insert(Employee record) {
-        return employeeMapper.insert(record);
+        int count = employeeMapper.insert(record);
+        //处理中间表（employee_role），建立员工角色关系
+        for (Role role:record.getRoles()) {
+            employeeMapper.insertRelation(record.getId(),role.getId());
+        }
+        return count;
     }
 
     @Override
@@ -40,7 +46,15 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Override
     public int updateByPrimaryKey(Employee record) {
-        return employeeMapper.updateByPrimaryKey(record);
+        int count = employeeMapper.updateByPrimaryKey(record);
+        //先打破原来的关系
+        employeeMapper.deleteRelation(record.getId());
+        //在建立后来要搭建的关系
+        //处理中间表（employee_role），建立员工角色关系
+        for (Role role:record.getRoles()) {
+            employeeMapper.insertRelation(record.getId(),role.getId());
+        }
+        return count;
     }
 
     @Override
@@ -62,5 +76,20 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Override
     public void remove(Long id) {
         employeeMapper.remove(id);
+    }
+
+    @Override
+    public void insertRelation(Long eid, Long rid) {
+        employeeMapper.insertRelation(eid,rid);
+    }
+
+    @Override
+    public List<Long> getRidByEid(Long eid) {
+        return employeeMapper.getRidByEid(eid);
+    }
+
+    @Override
+    public void deleteRelation(Long eid) {
+        employeeMapper.deleteRelation(eid);
     }
 }

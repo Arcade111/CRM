@@ -9,7 +9,7 @@ $(function () {
     emp_datagrid.datagrid({
         url: '/employee_list',
         fitColumns: true,
-        scrollbarSize:0,
+        scrollbarSize: 0,
         fit: true,
         striped: true,
         singleSelect: true,
@@ -111,10 +111,14 @@ $(function () {
             // call 'submit' method of form plugin to submit the form
             emp_form.form('submit', {
                 url: url,
-                onSubmit: function () {
+                onSubmit: function (param) {
                     //表单提交之前做的动作
-                    // do some check
-                    // return false to prevent submit;
+                    //获取选中的角色
+                    var values = $("#roles_combobox").combobox('getValues');
+                    for (var i = 0; i < values.length; i++) {
+                        //values数组里的每一个元素为角色的id
+                        param["roles[" + i + "].id"] = values[i];
+                    }
                 },
                 success: function (data) {
                     // console.log(data);刚传过来的不是json数据，而是json字符串
@@ -162,6 +166,16 @@ $(function () {
             if (row.dept) {
                 row["dept.id"] = row.dept.id;
             }
+            //发送ajax同步请求到后台查询员工所拥有的角色数据
+            var html = $.ajax({
+                url: "/getRidByEid?eid="+row.id,
+                async: false
+            }).responseText;
+            // console.log(html);
+            html = $.parseJSON(html);//html需要转成json对象
+            //回显角色
+            $("#roles_combobox").combobox('setValues',html);
+
             //数据回显
             emp_form.form('load', row);
             //打开对话框

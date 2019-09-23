@@ -3,13 +3,15 @@ $(function() {
 
 	$("#tree").tree({
 		method: 'get',
-		url: '/data/tree_data.json',
+		url: '/menu_getRootMenu',
 		onClick: function(node) {
 			//判断选项卡是否已经存在
 			if (tabsObj.tabs("exists", node.text)) {
 				//选中该选项卡
 				tabsObj.tabs("select", node.text);
 			} else {
+				//通过数据库获取的attributes是一个字符串，必须转化为json才能获取得到url
+				node.attributes = $.parseJSON(node.attributes);
 				//新增一个选项卡
 				tabsObj.tabs('add', {
 					closable:true,
